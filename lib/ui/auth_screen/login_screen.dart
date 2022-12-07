@@ -1,63 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
+import 'package:wasly_driver/constant/const_color.dart';
+import 'package:wasly_driver/cubit/auth_cubit/cubit.dart';
+import 'package:wasly_driver/cubit/auth_cubit/state.dart';
+import 'package:wasly_driver/widget/component.dart';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({Key? key}) : super(key: key);
-  TextEditingController userNameController= TextEditingController();
-  TextEditingController passwordController=TextEditingController();
-  final _formKey=GlobalKey<FormState>();
+  LoginScreen({Key? key}) : super(key: key);
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: userNameController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
+    var authCubit = AuthCubit.get(context);
+    return BlocConsumer<AuthCubit, AuthState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            body: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/logo_wassly_ar.png',
+                    ),
+                    textFormField(
+                      controller: userNameController,
+                      fct: (value) {
+                        if (value.isEmpty) {
+                          return 'من فضلك قم بادخال الاسم';
+                        }
+                      },
+                      label: 'اسم المستخدم',
+                      prefix: Icons.person,
+                      //  secure: authCubit.isVisible,
+                      // suffix:authCubit.isVisible?Icons.visibility:Icons.visibility_off ,
+                      // suffixTap: (){authCubit.changeVisibility();}
+                    ),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    textFormField(
+                        controller: passwordController,
+                        fct: (value) {
+                          if (value.isEmpty) {
+                            return 'من فضلك قم بادخال الرقم السري';
+                          }
+                        },
+                        label: 'الرقم السري',
+                        prefix: Icons.person,
+                        secure: authCubit.isVisible,
+                        suffix: authCubit.isVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        suffixTap: () {
+                          authCubit.changeVisibility();
+                        }),
+                    SizedBox(
+                      height: 2.h,
+                    ),
+                    mainButton(
+                      width: 40.w,
+                      text: 'تسجيل الدخول',
+                      fct: () {
+                        if (_formKey.currentState!.validate()) {
+                          print('object');
+                        }
+                      },
+                      color: redColor,
+                      context: context,
+                    )
+                  ],
                 ),
-                labelText: 'اسم المستخدم',
               ),
-              validator: (value){
-                if(value!.isEmpty){
-                  return 'من فضلك ادخل اسم المستخدم';
-                }
-                return null;
-
-              },
             ),
-            SizedBox(height: 10,),
-            TextFormField(
-              controller: passwordController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                labelText: 'اسم المستخدم',
-              ),
-              validator: (value){
-                if(value!.isEmpty){
-                  return 'من فضلك ادخل اسم المستخدم';
-                }
-                return null;
-
-              },
-            ),
-            SizedBox(height: 10,),
-            MaterialButton(onPressed: (){
-              if(_formKey.currentState!.validate()){
-                 print('validator');
-              }
-            },child: Text('تسجيل دخول'),),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
