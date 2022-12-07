@@ -17,4 +17,8 @@ class GeneralCubit extends Cubit<GeneralState>{
     'الطلبات',
     'حسابي',
   ];
+ void changeIndexTab(int index){
+    changeIndex=index;
+    emit(ChangeNavBarState());
+  }
 }

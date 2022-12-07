@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:wasly_driver/constant/const_color.dart';
 import 'package:wasly_driver/cubit/auth_cubit/cubit.dart';
 import 'package:wasly_driver/cubit/auth_cubit/state.dart';
+import 'package:wasly_driver/ui/main_screen/tabs_screen.dart';
 import 'package:wasly_driver/widget/component.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -71,6 +72,7 @@ class LoginScreen extends StatelessWidget {
                       fct: () {
                         if (_formKey.currentState!.validate()) {
                           print('object');
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const TabsScreen()));
                         }
                       },
                       color: redColor,
