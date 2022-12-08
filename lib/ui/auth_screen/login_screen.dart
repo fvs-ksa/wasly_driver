@@ -72,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                       fct: () {
                         if (_formKey.currentState!.validate()) {
                           print('object');
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const TabsScreen()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> TabsScreen()));
                         }
                       },
                       color: redColor,

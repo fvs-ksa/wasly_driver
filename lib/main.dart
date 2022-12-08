@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:wasly_driver/bloc_observe.dart';
 import 'package:wasly_driver/cubit/auth_cubit/cubit.dart';
 import 'package:wasly_driver/cubit/general_cubit/cubit.dart';
+import 'package:wasly_driver/cubit/order_cubit/cubit.dart';
 import 'package:wasly_driver/pallete.dart';
 import 'package:wasly_driver/ui/auth_screen/login_screen.dart';
 import 'package:wasly_driver/ui/main_screen/tabs_screen.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider<GeneralCubit>(create: (context)=>GeneralCubit()),
       BlocProvider<AuthCubit>(create: (context)=>AuthCubit(),),
+      BlocProvider(create: (context)=>OrderCubit()),
     ],
     child: Sizer(
         builder: (context,orientation,deviceType) {
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Palette.mainColor,
             ),
-            home:TabsScreen(),
+            home: TabsScreen(),
           );
         }
     ),
