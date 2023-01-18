@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
@@ -71,8 +72,10 @@ class LoginScreen extends StatelessWidget {
                       text: 'تسجيل الدخول',
                       fct: () {
                         if (_formKey.currentState!.validate()) {
-                          print('object');
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> TabsScreen()));
+                          if (kDebugMode) {
+                            print('object');
+                          }
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const TabsScreen()));
                         }
                       },
                       color: redColor,
